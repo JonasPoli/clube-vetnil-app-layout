@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhe do Pet - Clube Vetnil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Cores padrão Vetnil Dark (v1.html) */
+            --bg-1: #0d3b33;
+            --bg-2: #0b2f28;
+            --bg-3: #09251f;
+
+            --vetnil-green: #14443b;
+            --vetnil-dark-green: #0d3b33;
+            --vetnil-bright: #00A651;
+
+            /* Ajustes dark mode NuBank Style */
+            --bg-color: #051311;
+            --card-bg: rgba(255, 255, 255, .05);
+            --text-primary: #eaf4f1;
+            --text-secondary: rgba(234, 244, 241, .60);
+            --border-color: rgba(255, 255, 255, .10);
+            --input-bg: rgba(0, 0, 0, 0.25);
+
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(900px 520px at 50% 10%, rgba(26, 116, 98, .2) 0%, rgba(13, 59, 51, .0) 60%),
+                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header / App Bar */
+        .app-header {
+            padding: 24px 24px 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: rgba(13, 59, 51, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: -8px;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 24px 20px 48px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* Profile Avatar Section */
+        .pet-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .avatar-container {
+            position: relative;
+        }
+
+        .avatar {
+            width: 112px;
+            height: 112px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            background-image: url('https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=200&h=200&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border: 3px solid var(--vetnil-green);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .edit-avatar-btn {
+            position: absolute;
+            bottom: 4px;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--vetnil-bright);
+            color: #fff;
+            border: 2px solid var(--bg-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .edit-avatar-btn:active {
+            transform: scale(0.9);
+        }
+
+        .pet-name-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Form Groups */
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        /* 2-column grids for forms */
+        .input-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .input-row>.input-group {
+            flex: 1;
+        }
+
+        .input-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-select {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        /* Select specific NuBank styles */
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(234, 244, 241, 0.72)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+
+        .form-select option {
+            background-color: var(--bg-1);
+            color: white;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: var(--vetnil-bright);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Buttons Section */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background-color: var(--vetnil-bright);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background-color: transparent;
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            margin-top: 24px;
+        }
+
+        .btn-danger:active {
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <div class="header-left">
+                <button class="back-btn" aria-label="Voltar" onclick="window.history.back()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <h1 class="header-title">Perfil do Pet</h1>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <main class="content">
+
+            <!-- Pet Photo -->
+            <div class="pet-header">
+                <div class="avatar-container">
+                    <div class="avatar"
+                        style="background-image: url('https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=200&h=200&fit=crop');">
+                    </div>
+                    <button class="edit-avatar-btn" aria-label="Mudar foto do pet">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                            </path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                    </button>
+                </div>
+                <h2 class="pet-name-title">Rex</h2>
+            </div>
+
+            <!-- Pet Form -->
+            <div class="form-section">
+
+                <div class="input-group">
+                    <label class="input-label">Nome do Pet</label>
+                    <input type="text" class="form-input" value="Rex">
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label class="input-label">Tipo de Animal</label>
+                        <select class="form-select">
+                            <option value="dog" selected>Cachorro</option>
+                            <option value="cat">Gato</option>
+                            <option value="bird">Pássaro</option>
+                            <option value="other">Outro</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Sexo</label>
+                        <select class="form-select">
+                            <option value="m" selected>Macho</option>
+                            <option value="f">Fêmea</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Raça</label>
+                    <input type="text" class="form-input" value="Golden Retriever">
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label class="input-label">Data Nasc.</label>
+                        <input type="tel" class="form-input" value="10/12/2018">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Castrado?</label>
+                        <select class="form-select">
+                            <option value="yes" selected>Sim</option>
+                            <option value="no">Não</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-primary">Salvar Alterações</button>
+
+                <button class="btn btn-danger">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                    </svg>
+                    Remover Pet
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+
+</html>

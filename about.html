@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre a Campanha - Clube Vetnil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Cores padrão do aplicativo (v1.html) */
+            --bg-1: #0d3b33;
+            --bg-2: #0b2f28;
+            --bg-3: #09251f;
+
+            --vetnil-green: #14443b;
+            --vetnil-dark-green: #0d3b33;
+            --vetnil-bright: #00A651;
+
+            /* Ajustes para o novo tema mais dark */
+            --bg-color: #051311;
+            --card-bg: rgba(255, 255, 255, .07);
+            --text-primary: #eaf4f1;
+            --text-secondary: rgba(234, 244, 241, .72);
+            --border-color: rgba(255, 255, 255, .10);
+            --text-body: rgba(234, 244, 241, 0.85);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(900px 520px at 50% 10%, rgba(26, 116, 98, .35) 0%, rgba(13, 59, 51, .0) 60%),
+                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header / App Bar */
+        .app-header {
+            padding: 24px 24px 16px 24px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(13, 59, 51, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: -8px;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 24px 20px 48px 20px;
+            flex-grow: 1;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        /* Reading Text Typography */
+        .text-block {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-body);
+            margin-bottom: 24px;
+        }
+
+        .text-block strong {
+            color: var(--text-primary);
+        }
+
+        .image-banner {
+            width: 100%;
+            height: 160px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .image-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Highlight Box NuBank Style */
+        .highlight-box {
+            background-color: rgba(20, 68, 59, 0.3);
+            /* Vetnil green wash */
+            border-left: 4px solid var(--vetnil-bright);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 32px;
+        }
+
+        .highlight-box p {
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .highlight-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Products List */
+        .products-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            margin-top: 40px;
+            color: var(--text-primary);
+        }
+
+        .products-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .product-list-item {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .product-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            flex: 1;
+            padding-right: 12px;
+        }
+
+        .product-score {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--vetnil-bright);
+            background: rgba(0, 166, 81, 0.1);
+            padding: 6px 10px;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <button class="back-btn" aria-label="Voltar" onclick="window.history.back()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+            <h1 class="header-title">Clube Vetnil</h1>
+        </div>
+
+        <!-- Main Content -->
+        <main class="content">
+
+            <h1 class="page-title">Sobre a campanha</h1>
+
+            <div class="image-banner">
+                <!-- Using a generic pet placeholder for layout -->
+                <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?w=600&h=300&fit=crop"
+                    alt="Cachorro Feliz">
+            </div>
+
+            <div class="text-block">
+                Para participar do <strong>Clube Vetnil</strong> é muito simples, sempre que você efetuar a compra dos
+                produtos participantes da Vetnil nas lojas parceiras você estará sendo pontuado com
+                <strong>VetCoins</strong>!
+            </div>
+
+            <div class="text-block">
+                Essa pontuação poderá ser usada para trocar por brindes exclusivos para os participantes.
+            </div>
+
+            <div class="highlight-box">
+                <p>Para pontuar é muito simples, basta comprar o produto, enviar uma Foto do Cupom Fiscal pelo
+                    Aplicativo Clube Vetnil e aguardar a liberação de sua pontuação, assim que tudo estiver aprovado
+                    você será notificado e poderá utilizar as suas VetCoins.</p>
+                <p>Os Brindes serão enviados diretamente da Vetnil para você em seu endereço cadastrado dentro do
+                    Aplicativo Clube Vetnil, você poderá acompanhar o processo de envio e receber em sua residência o
+                    seu Brinde!</p>
+            </div>
+
+            <div class="text-block" style="text-align: center; font-size: 18px; font-weight: 500; margin: 40px 0;">
+                A Vetnil oferece a você, nosso cliente fiel, um Clube de Vantagens Exclusivo, por isso seja bem-vindo(a)
+                ao nosso Clube! :)
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--border-color); margin: 32px 0;">
+
+            <h2 class="products-title">Produtos Participantes</h2>
+            <div class="text-block" style="font-size: 14px; margin-bottom: 20px;">
+                Abaixo estamos listando os produtos participantes e suas respectivas pontuações por unidade:
+            </div>
+
+            <div class="products-grid">
+                <div class="product-list-item"><span class="product-name">Aminomix GOLD 100g</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Aminomix GOLD 500g</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Aminomix GOLD 120 Comp.</span><span
+                        class="product-score">100 V</span></div>
+                <div class="product-list-item"><span class="product-name">Aminomix Pet 100g</span><span
+                        class="product-score">20 V</span></div>
+                <div class="product-list-item"><span class="product-name">Aminomix Pet 500g</span><span
+                        class="product-score">70 V</span></div>
+                <div class="product-list-item"><span class="product-name">Aminomix Pet Comprimidos</span><span
+                        class="product-score">70 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Aurivet 13g</span><span
+                        class="product-score">60 V</span></div>
+                <div class="product-list-item"><span class="product-name">Aurivet Clean 120mL</span><span
+                        class="product-score">40 V</span></div>
+                <div class="product-list-item"><span class="product-name">Aurivet Clean 50mL</span><span
+                        class="product-score">30 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Cal-d-Mix 30 Comprimidos</span><span
+                        class="product-score">20 V</span></div>
+                <div class="product-list-item"><span class="product-name">Cal-d-Mix Líquido 100mL</span><span
+                        class="product-score">10 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Condroton Comp. 500mg</span><span
+                        class="product-score">100 V</span></div>
+                <div class="product-list-item"><span class="product-name">Condroton Comp. 1000mg</span><span
+                        class="product-score">200 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">DM Gel Bisnaga 200g</span><span
+                        class="product-score">150 V</span></div>
+                <div class="product-list-item"><span class="product-name">DM Gel Bisnaga 50g</span><span
+                        class="product-score">60 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Eletrolítico Pet 10g</span><span
+                        class="product-score">40 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Enterex Sachê 8G (Caixa c/ 10)</span><span
+                        class="product-score">100 V</span></div>
+                <div class="product-list-item"><span class="product-name">Enterex Sachê 8G (Unitário)</span><span
+                        class="product-score">10 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Furanil Bisnaga 50g</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Furanil Solução 60mL</span><span
+                        class="product-score">40 V</span></div>
+
+                <!-- Reduced list for brevity, pattern is clear -->
+                <div class="product-list-item"><span class="product-name">Furolisin 10mg (10 Comp.)</span><span
+                        class="product-score">05 V</span></div>
+                <div class="product-list-item"><span class="product-name">Furolisin 10mg (120 Comp.)</span><span
+                        class="product-score">50 V</span></div>
+                <div class="product-list-item"><span class="product-name">Furolisin 20mg (10 Comp.)</span><span
+                        class="product-score">10 V</span></div>
+                <div class="product-list-item"><span class="product-name">Furolisin 20mg (120 Comp.)</span><span
+                        class="product-score">70 V</span></div>
+                <div class="product-list-item"><span class="product-name">Furolisin 40mg (10 Comp.)</span><span
+                        class="product-score">15 V</span></div>
+                <div class="product-list-item"><span class="product-name">Furolisin 40mg (120 Comp.)</span><span
+                        class="product-score">90 V</span></div>
+                <div class="product-list-item"><span class="product-name">Furolisin 80mg (10 Comp.)</span><span
+                        class="product-score">20 V</span></div>
+                <div class="product-list-item"><span class="product-name">Furolisin 80mg (120 Comp.)</span><span
+                        class="product-score">110 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Gelo Pan 100g</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Gelo Pan 450g</span><span
+                        class="product-score">70 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Geripet 30 Comprimidos</span><span
+                        class="product-score">50 V</span></div>
+                <div class="product-list-item"><span class="product-name">Geripet Mastigáveis (30 Comp)</span><span
+                        class="product-score">75 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Glicopan Pet Gotas 30mL</span><span
+                        class="product-score">20 V</span></div>
+                <div class="product-list-item"><span class="product-name">Glicopan Pet 125mL</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Glicopan Pet 250mL</span><span
+                        class="product-score">50 V</span></div>
+                <div class="product-list-item"><span class="product-name">Glicopan GOLD 30 Comp.</span><span
+                        class="product-score">50 V</span></div>
+                <div class="product-list-item"><span class="product-name">Glicopan GOLD 30mL</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Glicopan GOLD 125mL</span><span
+                        class="product-score">40 V</span></div>
+                <div class="product-list-item"><span class="product-name">Glicopan GOLD 250mL</span><span
+                        class="product-score">60 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Hemolitan Pet 30 Comp.</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Hemolitan Pet Gotas 30mL</span><span
+                        class="product-score">20 V</span></div>
+                <div class="product-list-item"><span class="product-name">Hemolitan Pet Gotas 60mL</span><span
+                        class="product-score">30 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Hemolitan GOLD 30 Comp.</span><span
+                        class="product-score">50 V</span></div>
+                <div class="product-list-item"><span class="product-name">Hemolitan GOLD Gotas 30mL</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Hemolitan GOLD Gotas 60mL</span><span
+                        class="product-score">50 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Hepvet 30 Comprimidos</span><span
+                        class="product-score">60 V</span></div>
+                <div class="product-list-item"><span class="product-name">Hepvet Suspensão 60mL</span><span
+                        class="product-score">60 V</span></div>
+                <div class="product-list-item"><span class="product-name">Hepvet Mastigáveis (30 Comp)</span><span
+                        class="product-score">95 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Hidrovit 250mL</span><span
+                        class="product-score">40 V</span></div>
+                <div class="product-list-item"><span class="product-name">Hidrovit 50mL</span><span
+                        class="product-score">20 V</span></div>
+                <div class="product-list-item"><span class="product-name">Keravit 5g</span><span
+                        class="product-score">50 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Mebendazole Vetnil (Cx Fechada)</span><span
+                        class="product-score">100 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Meloxinew 0,5mg (10 Comp.)</span><span
+                        class="product-score">20 V</span></div>
+                <div class="product-list-item"><span class="product-name">Meloxinew 0,5mg (120 Comp.)</span><span
+                        class="product-score">170 V</span></div>
+                <div class="product-list-item"><span class="product-name">Meloxinew 1mg (10 Comp.)</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Meloxinew 1mg (120 Comp.)</span><span
+                        class="product-score">200 V</span></div>
+                <div class="product-list-item"><span class="product-name">Meloxinew 2mg (10 Comp.)</span><span
+                        class="product-score">40 V</span></div>
+                <div class="product-list-item"><span class="product-name">Meloxinew 2mg (120 Comp.)</span><span
+                        class="product-score">230 V</span></div>
+                <div class="product-list-item"><span class="product-name">Meloxinew 4mg (10 Comp.)</span><span
+                        class="product-score">50 V</span></div>
+                <div class="product-list-item"><span class="product-name">Meloxinew 4mg (120 Comp.)</span><span
+                        class="product-score">270 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Mucomucil Xarope 50mL</span><span
+                        class="product-score">70 V</span></div>
+                <div class="product-list-item"><span class="product-name">Nutração 250mL</span><span
+                        class="product-score">150 V</span></div>
+                <div class="product-list-item"><span class="product-name">Nutralife 14g</span><span
+                        class="product-score">60 V</span></div>
+                <div class="product-list-item"><span class="product-name">Nutralife Intensiv 300g</span><span
+                        class="product-score">80 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Nutralogic 60 Comprimidos</span><span
+                        class="product-score">90 V</span></div>
+                <div class="product-list-item"><span class="product-name">Nutralogic Pet 100g</span><span
+                        class="product-score">70 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Ômega 3 SE 550</span><span
+                        class="product-score">70 V</span></div>
+                <div class="product-list-item"><span class="product-name">Ômega 3 SE 1100</span><span
+                        class="product-score">100 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Optivet Tears 10mL</span><span
+                        class="product-score">70 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Organew Sachê 100g</span><span
+                        class="product-score">10 V</span></div>
+                <div class="product-list-item"><span class="product-name">Organew Pet Pasta 100g</span><span
+                        class="product-score">20 V</span></div>
+                <div class="product-list-item"><span class="product-name">Organew Pet Pasta 12g</span><span
+                        class="product-score">10 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Ornitil 100mL</span><span
+                        class="product-score">120 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Pelo & Derme GOLD (30 Comp.)</span><span
+                        class="product-score">40 V</span></div>
+                <div class="product-list-item"><span class="product-name">Pelo & Derme GOLD (60 Comp.)</span><span
+                        class="product-score">50 V</span></div>
+                <div class="product-list-item"><span class="product-name">Pelo & Derme 1550mg (30 Cáps.)</span><span
+                        class="product-score">50 V</span></div>
+                <div class="product-list-item"><span class="product-name">Pelo & Derme 1550mg (60 Cáps.)</span><span
+                        class="product-score">100 V</span></div>
+                <div class="product-list-item"><span class="product-name">Pelo & Derme 750mg (30 Cáps.)</span><span
+                        class="product-score">40 V</span></div>
+                <div class="product-list-item"><span class="product-name">Pelo & Derme Shampoo</span><span
+                        class="product-score">60 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Periovet Gel 25g</span><span
+                        class="product-score">40 V</span></div>
+                <div class="product-list-item"><span class="product-name">Periovet Spray 100mL</span><span
+                        class="product-score">30 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Pet Milk Sachê 100g</span><span
+                        class="product-score">40 V</span></div>
+                <div class="product-list-item"><span class="product-name">Pet Milk Sachê 300g</span><span
+                        class="product-score">90 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Petprazol 100mg</span><span
+                        class="product-score">60 V</span></div>
+                <div class="product-list-item"><span class="product-name">Petprazol 200mg</span><span
+                        class="product-score">70 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Probiótico Vetnil C/G 14g</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Promater 30mL</span><span
+                        class="product-score">40 V</span></div>
+                <div class="product-list-item"><span class="product-name">Promater Pó 100g</span><span
+                        class="product-score">60 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Vetmax Plus Susp. 30mL</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Vetmax Plus (04 Comp.)</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Vetmax Plus Avulso (1 Comp.)</span><span
+                        class="product-score">07 V</span></div>
+
+                <div class="product-list-item"><span class="product-name">Vetaglós Pomada 20g</span><span
+                        class="product-score">30 V</span></div>
+                <div class="product-list-item"><span class="product-name">Vita-Vet C 30 mL</span><span
+                        class="product-score">20 V</span></div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Pets - Clube Vetnil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Cores padrão Vetnil Dark (v1.html) */
+            --bg-1: #0d3b33;
+            --bg-2: #0b2f28;
+            --bg-3: #09251f;
+
+            --vetnil-green: #14443b;
+            --vetnil-dark-green: #0d3b33;
+            --vetnil-bright: #00A651;
+
+            /* Ajustes dark mode NuBank Style */
+            --bg-color: #051311;
+            --card-bg: rgba(255, 255, 255, .07);
+            --text-primary: #eaf4f1;
+            --text-secondary: rgba(234, 244, 241, .72);
+            --border-color: rgba(255, 255, 255, .10);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(900px 520px at 50% 10%, rgba(26, 116, 98, .35) 0%, rgba(13, 59, 51, .0) 60%),
+                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header / App Bar */
+        .app-header {
+            padding: 24px 24px 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: rgba(13, 59, 51, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: -8px;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+
+        .add-pet-btn {
+            background: none;
+            border: none;
+            color: var(--vetnil-bright);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 24px 16px;
+            flex-grow: 1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Pets List */
+        .pets-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .pet-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: transform 0.2s, background 0.2s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .pet-card:active {
+            transform: scale(0.98);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .pet-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            position: relative;
+            color: var(--vetnil-bright);
+        }
+
+        .pet-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .pet-info {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .pet-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .pet-details-line {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pet-details-line span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chevron {
+            color: var(--text-secondary);
+            margin-left: 8px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 48px 24px;
+            opacity: 0.8;
+            display: none;
+            /* Hidden by default */
+        }
+
+        .empty-state svg {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <div class="header-left">
+                <button class="back-btn" aria-label="Voltar" onclick="window.history.back()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <h1 class="header-title">Meus Pets</h1>
+            </div>
+            <button class="add-pet-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Adicionar
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <main class="content">
+
+            <div class="pets-list">
+
+                <!-- Pet Card 1 (Dog) -->
+                <a href="pet-detail.html" class="pet-card">
+                    <div class="pet-avatar">
+                        <!-- Placholder Paw Icon -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.5">
+                            <path
+                                d="M12 2c-5.33 0-8 2.67-8 8v4c0 4.42 3.58 8 8 8h0c4.42 0 8-3.58 8-8v-4c0-5.33-2.67-8-8-8zM7 8.5c-.83 0-1.5-.67-1.5-1.5S6.17 5.5 7 5.5 8.5 6.17 8.5 7 7.83 8.5 7 8.5zM10.5 7c-.83 0-1.5-.67-1.5-1.5S9.67 4 10.5 4 12 4.67 12 5.5 11.33 7 10.5 7zM13.5 7c-.83 0-1.5-.67-1.5-1.5S12.67 4 13.5 4 15 4.67 15 5.5 14.33 7 13.5 7zM17 8.5c-.83 0-1.5-.67-1.5-1.5S16.17 5.5 17 5.5 18.5 6.17 18.5 7 17.83 8.5 17 8.5zM12 18c-3.31 0-6-2.69-6-6v-2h12v2c0 3.31-2.69 6-6 6z">
+                            </path>
+                        </svg>
+                        <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=200&h=200&fit=crop"
+                            alt="Foto do pet">
+                    </div>
+                    <div class="pet-info">
+                        <span class="pet-name">Rex</span>
+                        <div class="pet-details-line">
+                            <span>Golden Retriever</span>
+                            <span>•</span>
+                            <span>Macho</span>
+                        </div>
+                    </div>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <!-- Pet Card 2 (Cat) -->
+                <a href="pet-detail.html" class="pet-card">
+                    <div class="pet-avatar">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.5">
+                            <path
+                                d="M12 2c-5.33 0-8 2.67-8 8v4c0 4.42 3.58 8 8 8h0c4.42 0 8-3.58 8-8v-4c0-5.33-2.67-8-8-8zM7 8.5c-.83 0-1.5-.67-1.5-1.5S6.17 5.5 7 5.5 8.5 6.17 8.5 7 7.83 8.5 7 8.5zM10.5 7c-.83 0-1.5-.67-1.5-1.5S9.67 4 10.5 4 12 4.67 12 5.5 11.33 7 10.5 7zM13.5 7c-.83 0-1.5-.67-1.5-1.5S12.67 4 13.5 4 15 4.67 15 5.5 14.33 7 13.5 7zM17 8.5c-.83 0-1.5-.67-1.5-1.5S16.17 5.5 17 5.5 18.5 6.17 18.5 7 17.83 8.5 17 8.5zM12 18c-3.31 0-6-2.69-6-6v-2h12v2c0 3.31-2.69 6-6 6z">
+                            </path>
+                        </svg>
+                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&h=200&fit=crop"
+                            alt="Foto do pet">
+                    </div>
+                    <div class="pet-info">
+                        <span class="pet-name">Luna</span>
+                        <div class="pet-details-line">
+                            <span>Siamês</span>
+                            <span>•</span>
+                            <span>Fêmea</span>
+                        </div>
+                    </div>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <!-- Pet Card 3 (Bird/Other) -->
+                <a href="pet-detail.html" class="pet-card">
+                    <div class="pet-avatar">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.5">
+                            <path
+                                d="M12 2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V10l-10-10zm0 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z">
+                            </path>
+                        </svg>
+                        <img src="https://images.unsplash.com/photo-1549608276-5786777e6587?w=200&h=200&fit=crop"
+                            alt="Foto do pet">
+                    </div>
+                    <div class="pet-info">
+                        <span class="pet-name">Pipo</span>
+                        <div class="pet-details-line">
+                            <span>Calopsita</span>
+                            <span>•</span>
+                            <span>Macho</span>
+                        </div>
+                    </div>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+            </div>
+
+        </main>
+    </div>
+
+</body>
+
+</html>

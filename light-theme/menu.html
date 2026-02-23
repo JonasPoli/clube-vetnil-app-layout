@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Vetnil App - Menu (Modo Claro)</title>
+    <!-- Use Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Tema Claro */
+            --bg-1: #ffffff;
+            --bg-2: #f8faf9;
+            --bg-3: #f0f4f3;
+
+            --bg-color: #e2e8e4;
+
+            --vetnil-dark-green: #14443b;
+            --vetnil-green: #00A651;
+
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --border-color: rgba(0, 0, 0, 0.08);
+
+            --pad: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background-color: var(--bg-color);
+        }
+
+        body {
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            position: relative;
+        }
+
+        /* Fundo desfocado simulando a tela de trás (v1.html light) */
+        .app-bg {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            background: #ffffff;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) scale(0.95);
+            transform-origin: top center;
+            border-radius: 20px;
+            overflow: hidden;
+            opacity: 0.6;
+            pointer-events: none;
+            filter: blur(2px);
+            z-index: 1;
+        }
+
+        /* Menu Overlay principal */
+        .app-menu {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            background-color: #ffffff;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            padding: env(safe-area-inset-top, 40px) var(--pad) 20px;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .close-btn {
+            background: var(--bg-3);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            cursor: pointer;
+            margin-bottom: 24px;
+            transition: background 0.2s;
+        }
+
+        .close-btn:active {
+            background: #e5e7eb;
+        }
+
+        /* Perfil */
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 24px var(--pad);
+        }
+
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 2px solid #eaeaea;
+            background:
+                radial-gradient(circle at 30% 35%, rgba(200, 180, 160, .9) 0 22%, transparent 23%),
+                radial-gradient(circle at 62% 38%, rgba(210, 190, 170, .9) 0 20%, transparent 21%),
+                radial-gradient(circle at 45% 72%, rgba(120, 80, 60, .8) 0 40%, transparent 41%),
+                radial-gradient(circle at 50% 55%, var(--vetnil-green) 0 55%, transparent 56%);
+            position: relative;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .profile-balance {
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .profile-balance svg {
+            color: var(--vetnil-green);
+        }
+
+        /* Menu Content */
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: env(safe-area-inset-bottom, 40px);
+            scrollbar-width: none;
+        }
+
+        .scrollable-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .menu-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 18px var(--pad);
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: background 0.2s;
+            position: relative;
+            justify-content: space-between;
+        }
+
+        .menu-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: var(--pad);
+            right: var(--pad);
+            height: 1px;
+            background-color: var(--border-color);
+        }
+
+        .menu-item:last-child::after {
+            display: none;
+        }
+
+        .menu-item:active {
+            background-color: var(--bg-2);
+        }
+
+        .menu-item-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--vetnil-dark-green);
+        }
+
+        .menu-label {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .menu-chevron {
+            width: 20px;
+            height: 20px;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        .menu-divider {
+            height: 8px;
+            background-color: var(--bg-3);
+            margin: 8px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logout-item {
+            margin-top: auto;
+            color: #ef4444;
+            /* Vermelho vivo alertativo */
+        }
+
+        .logout-item .menu-icon {
+            color: #ef4444;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background estático borrado para dar sensação de Modal (padrão Nubank) -->
+    <div class="app-bg">
+        <div style="padding: 40px 24px; background: #fff; height: 100%;">
+            <div style="width:52px; height:52px; border-radius:50%; background:#f0f0f0;"></div>
+        </div>
+    </div>
+
+    <!-- Menus Clicáveis -->
+    <main class="app-menu">
+        <div class="header">
+            <button class="close-btn" aria-label="Fechar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="profile">
+            <div class="avatar" aria-label="Foto do perfil"></div>
+            <div class="profile-info">
+                <div class="profile-name">Jonas Poli</div>
+                <div class="profile-balance">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                        </polygon>
+                    </svg>
+                    32.540 vetcoins
+                </div>
+            </div>
+        </div>
+
+        <div class="scrollable-content">
+            <nav class="menu-list">
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <span class="menu-label">Dashboard</span>
+                    </div>
+                    <svg class="menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                        <span class="menu-label">Notas Fiscais</span>
+                    </div>
+                    <svg class="menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <span class="menu-label">Enviar Nota Fiscal</span>
+                    </div>
+                    <svg class="menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="menu-label">Meu Perfil</span>
+                    </div>
+                    <svg class="menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9z"></path>
+                            <path d="M12 2C8.13 2 5 5.13 5 9v3h14V9c0-3.87-3.13-7-7-7z"></path>
+                            <circle cx="9" cy="8" r="1.5"></circle>
+                            <circle cx="15" cy="8" r="1.5"></circle>
+                            <circle cx="12" cy="5" r="1"></circle>
+                        </svg>
+                        <span class="menu-label">Meus Pets</span>
+                    </div>
+                    <svg class="menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <div class="menu-divider"></div>
+
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span class="menu-label">Sobre a Campanha</span>
+                    </div>
+                    <svg class="menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                        <span class="menu-label">Regulamento</span>
+                    </div>
+                    <svg class="menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        <span class="menu-label">Termos de Uso</span>
+                    </div>
+                    <svg class="menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <div class="menu-item-left">
+                        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        <span class="menu-label">FAQ</span>
+                    </div>
+                    <svg class="menu-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+            </nav>
+
+            <!-- Box Isolada no fim -->
+            <div style="padding: 24px var(--pad); margin-top: 12px;">
+                <a href="#" class="menu-item logout-item"
+                    style="border-radius: 16px; border: 1px solid #fecaca; background: #fff5f5; padding: 18px;">
+                    <div class="menu-item-left">
+                        <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span class="menu-label" style="font-weight: 700;">Sair da conta</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

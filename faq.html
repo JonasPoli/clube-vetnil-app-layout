@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dúvidas Frequentes - Clube Vetnil</title>
+    <!-- Use Google Fonts (Inter) for a clean look like Nubank -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Cores padrão do aplicativo (v1.html) */
+            --bg-1: #0d3b33;
+            --bg-2: #0b2f28;
+            --bg-3: #09251f;
+
+            --vetnil-green: #14443b;
+            --vetnil-dark-green: #0d3b33;
+            --vetnil-bright: #00A651;
+
+            /* Ajustes para o novo tema mais dark */
+            --bg-color: #051311;
+            --card-bg: rgba(255, 255, 255, .07);
+            --card-bg-hover: rgba(255, 255, 255, .1);
+            --text-primary: #eaf4f1;
+            --text-secondary: rgba(234, 244, 241, .72);
+            --border-color: rgba(255, 255, 255, .10);
+
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(900px 520px at 50% 10%, rgba(26, 116, 98, .35) 0%, rgba(13, 59, 51, .0) 60%),
+                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: transparent;
+        }
+
+        /* Header / App Bar */
+        .app-header {
+            padding: 24px 24px 16px 24px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(13, 59, 51, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: -8px;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 24px 16px;
+            flex-grow: 1;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        /* Accordion Style */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .accordion-item {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: background 0.3s;
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .accordion-header:active {
+            background-color: var(--card-bg-hover);
+        }
+
+        .chevron-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+
+        /* Content Panel */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: rgba(0, 0, 0, 0.15);
+            /* Slightly darker inner bg */
+        }
+
+        .accordion-inner-content {
+            padding: 0 20px 20px 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(234, 244, 241, 0.85);
+        }
+
+        /* Active State */
+        .accordion-item.active .chevron-icon {
+            transform: rotate(180deg);
+            color: var(--vetnil-bright);
+        }
+
+        /* Contact support block attached at the bottom of the list */
+        .support-card {
+            margin-top: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(0, 166, 81, 0.1) 0%, rgba(20, 68, 59, 0.4) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 166, 81, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .support-card:active {
+            transform: scale(0.98);
+        }
+
+        .support-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: rgba(0, 166, 81, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--vetnil-bright);
+            flex-shrink: 0;
+        }
+
+        .support-text h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .support-text p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <button class="back-btn" aria-label="Voltar" onclick="window.history.back()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+            <h1 class="header-title">Me Ajuda</h1>
+        </div>
+
+        <!-- Main Content -->
+        <main class="content">
+            <h2 class="section-title">Dúvidas Frequentes</h2>
+            <p class="section-subtitle">Encontre rapidamente respostas para as principais dúvidas sobre o Clube Vetnil.
+            </p>
+
+            <!-- Accordion List -->
+            <div class="faq-list">
+
+                <!-- FAQ Item 1 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        Como eu acumulo Vetcoins?
+                        <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner-content">
+                            A cada produto Vetnil participante comprado, você ganha um valor em Vetcoins. Basta acessar
+                            o aplicativo, ir em "Enviar Notas", tirar uma foto legível do seu cupom fiscal e aguardar a
+                            validação. Assim que a nota for aprovada, o saldo será adicionado automaticamente à sua
+                            conta.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        Qual o prazo para a nota fiscal ser aprovada?
+                        <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner-content">
+                            Nosso time de moderação analisa as notas fiscais enviadas em até <strong>72 horas
+                                úteis</strong>. Em períodos de pico, esse prazo pode se estender, mas enviaremos uma
+                            notificação no app e no seu e-mail assim que houver uma atualização.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        Os meus Vetcoins expiram?
+                        <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner-content">
+                            Sim! Fique atento(a): os Vetcoins acumulados têm validade de <strong>12 meses</strong> a
+                            partir da data em que foram creditados na sua conta. Caso não sejam trocados por prêmios
+                            nesse período, eles expiram no primeiro dia do mês subsequente.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        Esqueci minha senha, como acesso o clube?
+                        <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner-content">
+                            Na tela de login do aplicativo, clique em "Esqueci minha senha". Você receberá um link
+                            seguro no seu e-mail cadastrado (o mesmo usado na criação da conta) para criar uma nova
+                            senha e voltar a participar do clube.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        Qual o valor do frete para receber prêmios?
+                        <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner-content">
+                            O envio dos prêmios físicos é uma cortesia exclusiva do Clube Vetnil! Você não paga nenhum
+                            valor de frete. Por isso, lembre-se sempre de manter o seu endereço de entrega atualizado na
+                            área do seu Perfil.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Support Block -->
+            <div class="support-card" onclick="alert('Iniciando atendimento via WhatsApp...')">
+                <div class="support-icon">
+                    <!-- Headset Icon -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                        <path
+                            d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="support-text">
+                    <h3>Ainda precisa de ajuda?</h3>
+                    <p>Fale com o nosso atendimento via WhatsApp.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Accordion Script -->
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                const content = button.nextElementSibling;
+                const isActive = item.classList.contains('active');
+
+                // Collapse all
+                document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                });
+
+                // Open clicked if it wasn't already open
+                if (!isActive) {
+                    item.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

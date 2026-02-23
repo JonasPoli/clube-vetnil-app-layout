@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - Clube Vetnil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Cores padrão Vetnil Dark (v1.html) */
+            --bg-1: #0d3b33;
+            --bg-2: #0b2f28;
+            --bg-3: #09251f;
+
+            --vetnil-green: #14443b;
+            --vetnil-dark-green: #0d3b33;
+            --vetnil-bright: #00A651;
+
+            /* Ajustes dark mode NuBank Style */
+            --bg-color: #051311;
+            --card-bg: rgba(255, 255, 255, .05);
+            --text-primary: #eaf4f1;
+            --text-secondary: rgba(234, 244, 241, .60);
+            --border-color: rgba(255, 255, 255, .10);
+            --input-bg: rgba(0, 0, 0, 0.25);
+
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(900px 520px at 50% 10%, rgba(26, 116, 98, .2) 0%, rgba(13, 59, 51, .0) 60%),
+                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header */
+        .app-header {
+            padding: 24px 24px 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: rgba(13, 59, 51, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: -8px;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+
+        /* Main Scrollable Content */
+        .content {
+            padding: 24px 20px 48px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* Profile Avatar Section */
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 16px;
+        }
+
+        .avatar-container {
+            position: relative;
+        }
+
+        .avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            background-image: url('https://i.pravatar.cc/150?u=jonas');
+            background-size: cover;
+            background-position: center;
+            border: 2px solid var(--border-color);
+        }
+
+        .edit-avatar-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--vetnil-bright);
+            color: #fff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .edit-avatar-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* Form Groups */
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        /* 2-column grids for forms */
+        .input-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .input-row>.input-group {
+            flex: 1;
+        }
+
+        /* Specific widths for forms */
+        .col-cep {
+            flex: 1;
+        }
+
+        .col-uf {
+            flex: 0.4;
+        }
+
+        /* smaller uf */
+        .col-num {
+            flex: 0.4;
+        }
+
+        .col-address {
+            flex: 1;
+        }
+
+        .input-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-left: 4px;
+        }
+
+        .form-input {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 16px;
+            border-radius: 12px;
+            /* NuBank rounded fields */
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: var(--vetnil-bright);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .form-input:read-only {
+            opacity: 0.6;
+            background-color: transparent;
+            border-color: transparent;
+            padding-left: 0;
+            pointer-events: none;
+        }
+
+        /* Buttons Section */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background-color: var(--vetnil-bright);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background-color: transparent;
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            margin-top: 24px;
+        }
+
+        .btn-danger:active {
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <div class="header-left">
+                <button class="back-btn" aria-label="Voltar" onclick="window.history.back()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <h1 class="header-title">Editar Perfil</h1>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <main class="content">
+
+            <!-- Photo -->
+            <div class="profile-header">
+                <div class="avatar-container">
+                    <div class="avatar"></div>
+                    <button class="edit-avatar-btn" aria-label="Mudar foto">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                            </path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dados Pessoais Form -->
+            <div class="form-section">
+                <h2 class="section-title">Dados Pessoais</h2>
+
+                <div class="input-group">
+                    <label class="input-label">Nome Completo</label>
+                    <input type="text" class="form-input" value="Jonas Poli da Silva">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">E-mail</label>
+                    <input type="email" class="form-input" value="jonaspoli@email.com">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">CPF (Apenas leitura)</label>
+                    <input type="text" class="form-input" value="123.456.789-00" readonly>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label class="input-label">Celular</label>
+                        <input type="tel" class="form-input" value="(11) 98765-4321">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Data Nasc.</label>
+                        <input type="tel" class="form-input" value="15/08/1990">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endereço Form -->
+            <div class="form-section">
+                <h2 class="section-title">Endereço</h2>
+
+                <div class="input-row">
+                    <div class="input-group col-cep">
+                        <label class="input-label">CEP</label>
+                        <input type="tel" class="form-input" value="01310-100">
+                    </div>
+                    <div class="input-group col-uf">
+                        <label class="input-label">Estado</label>
+                        <input type="text" class="form-input" value="SP">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Cidade</label>
+                    <input type="text" class="form-input" value="São Paulo">
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group col-address">
+                        <label class="input-label">Endereço</label>
+                        <input type="text" class="form-input" value="Av Paulista">
+                    </div>
+                    <div class="input-group col-num">
+                        <label class="input-label">Número</label>
+                        <input type="tel" class="form-input" value="1578">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Bairro</label>
+                    <input type="text" class="form-input" value="Bela Vista">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Complemento (opcional)</label>
+                    <input type="text" class="form-input" value="Apto 102">
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-primary">Atualizar Dados</button>
+
+                <button class="btn btn-danger">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                    </svg>
+                    Apagar Minha Conta
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+
+</html>

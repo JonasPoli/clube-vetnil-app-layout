@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termos de Uso - Clube Vetnil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Cores padrão do aplicativo (v1.html) */
+            --bg-1: #0d3b33;
+            --bg-2: #0b2f28;
+            --bg-3: #09251f;
+
+            --vetnil-green: #14443b;
+            --vetnil-dark-green: #0d3b33;
+            --vetnil-bright: #00A651;
+
+            /* Ajustes para o novo tema mais dark */
+            --bg-color: #051311;
+            --card-bg: rgba(255, 255, 255, .07);
+            --text-primary: #eaf4f1;
+            --text-secondary: rgba(234, 244, 241, .72);
+            --border-color: rgba(255, 255, 255, .10);
+            --text-body: rgba(234, 244, 241, 0.85);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(900px 520px at 50% 10%, rgba(26, 116, 98, .35) 0%, rgba(13, 59, 51, .0) 60%),
+                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header / App Bar */
+        .app-header {
+            padding: 24px 24px 16px 24px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(13, 59, 51, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: -8px;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 24px 20px 48px 20px;
+            flex-grow: 1;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        /* Typography for Long Texts */
+        .legal-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-body);
+            margin-bottom: 32px;
+        }
+
+        .legal-text h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 32px 0 16px 0;
+            letter-spacing: -0.2px;
+        }
+
+        .legal-text h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 24px 0 12px 0;
+        }
+
+        .legal-text p {
+            margin-bottom: 16px;
+        }
+
+        .legal-text ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .legal-text li {
+            margin-bottom: 8px;
+        }
+
+        .legal-text strong {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .legal-text a {
+            color: var(--vetnil-bright);
+            text-decoration: none;
+        }
+
+        .update-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 48px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <button class="back-btn" aria-label="Voltar" onclick="window.history.back()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+            <h1 class="header-title">Clube Vetnil</h1>
+        </div>
+
+        <!-- Main Content -->
+        <main class="content">
+
+            <h1 class="page-title">Termos de Uso</h1>
+
+            <div class="legal-text">
+                <p>Vetnil Indústria e Comércio de Produtos Veterinários Ltda. (Vetnil), registrada sob o CNPJ
+                    73.196.438/0001-60, apresenta os Termos e Condições de Uso (Termos de Uso) para utilização do
+                    Aplicativo CLUBE VETNIL (“Aplicativo”) e acesso às suas demais funcionalidades.</p>
+
+                <p>Antes de efetuar o seu cadastro no Aplicativo ou utilizar as suas funcionalidades, leia com atenção
+                    nossos "Termos de Uso" e "Política de Privacidade" disponível no site <a
+                        href="http://www.clubevetnil.com.br" target="_blank">www.clubevetnil.com.br</a> e na tela
+                    inicial do Aplicativo Clube Vetnil, o acesso é aberto ao público interessado para leitura na íntegra
+                    antes de realizar qualquer cadastro para uso.</p>
+
+                <p>Ao se cadastrar, o Usuário do Aplicativo afirma estar de acordo com as condições aqui estabelecidas.
+                    Os Termos de Uso e a Política de Privacidade são válidos para todos os usuários de nossa plataforma
+                    digital.</p>
+
+                <h2>1. Alterações</h2>
+                <p><strong>1.1.</strong> Reservamo-nos o direito de alterar ou modificar estes Termos de Uso ao nosso
+                    exclusivo critério, a qualquer momento, sem prévia comunicação ao Usuário. Qualquer alteração ou
+                    modificação entrará em vigor imediatamente após a publicação. O Usuário é responsável por analisar
+                    periodicamente a versão mais atualizada.</p>
+                <p><strong>1.2.</strong> O uso continuado dos nossos serviços constitui a aceitação pelo Usuário de
+                    quaisquer alterações feitas.</p>
+
+                <h2>2. Usuários</h2>
+                <p>Para os fins destes Termos e Política de Privacidade, consideram-se:</p>
+                <ul>
+                    <li><strong>2.1. Usuário(s):</strong> Pessoas físicas (maiores de 18 anos) ou jurídicas cadastradas
+                        no App.</li>
+                    <li><strong>2.2. Consumidor:</strong> Brasileiros, maiores de 18 anos, com conta cadastrada.</li>
+                    <li><strong>2.3. Lojista:</strong> Pessoa jurídica titular de conta no Aplicativo que revende
+                        Vetnil.</li>
+                    <li><strong>2.4. Distribuidor:</strong> PJ credenciada que comercializa e distribui os produtos
+                        Vetnil em território delimitado.</li>
+                </ul>
+
+                <h2>3. Cadastro</h2>
+                <p><strong>3.1.</strong> Para acessar áreas e serviços restritos, é necessário realizar o cadastro com
+                    login, senha e dados pessoais (nome, CPF, endereço, email).</p>
+                <p><strong>3.2.</strong> O Usuário se responsabiliza pela veracidade e precisão dos dados, sendo a
+                    inconsistência motivo de restrição de acesso.</p>
+                <p><strong>3.3.</strong> A guarda e confidencialidade da senha é de inteira responsabilidade do Usuário.
+                </p>
+                <p><strong>3.4.</strong> Notifique a Vetnil sobre quebras de segurança. A Vetnil não se responsabiliza
+                    por prejuízos acarretados pelo uso não autorizado da senha.</p>
+                <p><strong>3.5.</strong> O Usuário pode solicitar exclusão da conta. A Vetnil guardará os dados pelo
+                    prazo exigido pela legislação vigente (processos judiciais, ordens legais, etc).</p>
+
+                <h2>4. Dados Cadastrais</h2>
+                <p><strong>4.1.</strong> A Vetnil utiliza os dados para promover o clube, conceder benefícios, gerir
+                    descontos locais e melhorar a experiência e desempenho.</p>
+                <p><strong>4.2.</strong> Dados poderão ser compartilhados com os desenvolvedores, visando manutenções ou
+                    reparos da plataforma digital.</p>
+                <p><strong>4.3.</strong> Comprometemo-nos a não comercializar, vender ou repassar tais dados com fins
+                    escusos ou não predefinidos nos termos acima citados.</p>
+                <p><strong>4.4.</strong> Informações poderão ser divulgadas caso exigido por força de leis, mandados
+                    judiciais, reforço destes Termos de Uso ou proteção de vida, bens e equipe Vetnil.</p>
+
+                <h2>5. Responsabilidades do Usuário</h2>
+                <p>É dever exclusivo e integral do Usuário:</p>
+                <ul>
+                    <li>Manter o sigilo e não compartilhar credenciais.</li>
+                    <li>Todo e qualquer ato por ele emitido no Uso ou Acesso.</li>
+                    <li>Todo e qualquer conteúdo e arquivos enviados.</li>
+                    <li>A reparação de danos diretos e indiretos gerados a terceiros, lojistas e a Vetnil devido à
+                        violação destas diretrizes.</li>
+                </ul>
+
+                <h2>6. Obrigações e Práticas</h2>
+                <p><strong>6.1.</strong> O Uso não deve ser fraudulento; não deve ferir patentes ou direitos autorais;
+                    não deve violar leis; não deve conter vírus ou softwares maliciosos.</p>
+                <p><strong>6.2. Engenharia Reversa:</strong> Proibido desmontar, tentar acesso ao código-fonte, copiar e
+                    lucrar indevidamente com a plataforma Vetnil.</p>
+                <p><strong>6.3. Direitos Reservados:</strong> A propriedade intelectual completa pertence à Vetnil.</p>
+                <p><strong>6.5.</strong> A Vetnil ou seus Distribuidores reservam o direito legal de banir/bloquear
+                    qualquer conta de usuário que apresentar violação grave ou infração contínua destas regras.</p>
+                <p><strong>6.7. Local e Leis:</strong> Termos regidos pelas leis Brasileiras, Foro Comarca de Louveira -
+                    SP.</p>
+
+                <h2>7. Remoção de Dados</h2>
+                <p>Em conformidade com a LGPD, os usuários podem solicitar a remoção via site: <a
+                        href="https://clubevetnil.com.br/remocao-de-dados/"
+                        target="_blank">clubevetnil.com.br/remocao-de-dados/</a>.</p>
+                <p>Após avaliação da equipe e validações sistêmicas, dados serão excluídos em até 5 dias úteis,
+                    excutando as obrigações judiciárias em que a Lei obriga a guarda dos dados sensíveis por prazos de 3
+                    ou 5 anos a depender do ato envolvido.</p>
+                <p>Excluir a conta acarreta a perda de <strong>VetCoins</strong> já conquistados ou não utilizados de
+                    forma irretratável.</p>
+
+                <p class="update-date">Atualizado em: 16/03/2024</p>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+
+</html>

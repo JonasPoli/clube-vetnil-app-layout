@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Notas Fiscais - Clube Vetnil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Cores padrão do aplicativo (v1.html) */
+            --bg-1: #0d3b33;
+            --bg-2: #0b2f28;
+            --bg-3: #09251f;
+
+            --vetnil-green: #14443b;
+            --vetnil-dark-green: #0d3b33;
+            --vetnil-bright: #00A651;
+
+            /* Ajustes para o novo tema mais dark */
+            --bg-color: #051311;
+            --card-bg: rgba(255, 255, 255, .07);
+            --text-primary: #eaf4f1;
+            --text-secondary: rgba(234, 244, 241, .72);
+            --border-color: rgba(255, 255, 255, .10);
+
+            /* Status Colors NuBank Style */
+            --status-pending: #f59e0b;
+            /* Amber/Yellow for analysis */
+            --status-approved: #10b981;
+            /* Green for success */
+            --status-rejected: #ef4444;
+            /* Red for refused */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(900px 520px at 50% 10%, rgba(26, 116, 98, .35) 0%, rgba(13, 59, 51, .0) 60%),
+                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header / App Bar */
+        .app-header {
+            padding: 24px 24px 16px 24px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(13, 59, 51, 0.85);
+            /* rgba value of --bg-1 */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: -8px;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 24px 16px;
+            flex-grow: 1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Invoice List */
+        .invoice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .invoice-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            gap: 16px;
+            transition: transform 0.2s, background 0.2s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-primary);
+            align-items: center;
+        }
+
+        .invoice-card:active {
+            transform: scale(0.98);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Invoice Image Thumbnail */
+        .invoice-thumb {
+            width: 64px;
+            height: 84px;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.3);
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .invoice-info {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        /* Title and Vetcoins Header */
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2px;
+        }
+
+        .invoice-tag {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .vetcoins-gain {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--vetnil-bright);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Modifiers for gain amount */
+        .vetcoins-gain.pending {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .vetcoins-gain.rejected {
+            color: var(--status-rejected);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        /* Date line */
+        .invoice-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 100px;
+            margin-top: 4px;
+            align-self: flex-start;
+        }
+
+        .status-badge::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        /* Specific Statuses */
+        .status-approved {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: var(--status-approved);
+        }
+
+        .status-approved::before {
+            background-color: var(--status-approved);
+        }
+
+        .status-analysis {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: var(--status-pending);
+        }
+
+        .status-analysis::before {
+            background-color: var(--status-pending);
+        }
+
+        .status-rejected {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: var(--status-rejected);
+        }
+
+        .status-rejected::before {
+            background-color: var(--status-rejected);
+        }
+
+        /* Right Chevron */
+        .chevron {
+            color: var(--text-secondary);
+            margin-left: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <button class="back-btn" aria-label="Voltar" onclick="window.history.back()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+            <h1 class="header-title">Minhas Notas</h1>
+        </div>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="section-header">
+                <h2 class="section-title">Histórico de Envios</h2>
+            </div>
+
+            <div class="invoice-list">
+
+                <!-- Approved Invoice -->
+                <a href="#" class="invoice-card">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=200&auto=format&fit=crop"
+                        class="invoice-thumb" alt="Miniatura da nota">
+                    <div class="invoice-info">
+                        <div class="invoice-header">
+                            <span class="invoice-tag">Nota #49314</span>
+                            <span class="vetcoins-gain">+500 V</span>
+                        </div>
+                        <span class="invoice-date">20 Fev 2026, 10:30</span>
+                        <div class="status-badge status-approved">Aprovada</div>
+                    </div>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <!-- In Analysis Invoice -->
+                <a href="#" class="invoice-card">
+                    <!-- Utilizando uma das imagens gerada pela I.A ou de fallback -->
+                    <img src="https://images.unsplash.com/photo-1620950337357-1941d4486d34?q=80&w=200&auto=format&fit=crop"
+                        class="invoice-thumb" alt="Miniatura da nota">
+                    <div class="invoice-info">
+                        <div class="invoice-header">
+                            <span class="invoice-tag">Nota #90342</span>
+                            <span class="vetcoins-gain pending">--- V</span>
+                        </div>
+                        <span class="invoice-date">Ontem, 16:45</span>
+                        <div class="status-badge status-analysis">Em análise</div>
+                    </div>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <!-- Rejected Invoice -->
+                <a href="#" class="invoice-card">
+                    <img src="https://images.unsplash.com/photo-1607513746994-51f730a44832?q=80&w=200&auto=format&fit=crop"
+                        class="invoice-thumb" alt="Miniatura da nota" style="opacity: 0.6">
+                    <div class="invoice-info">
+                        <div class="invoice-header">
+                            <span class="invoice-tag">Nota #22188</span>
+                            <span class="vetcoins-gain rejected">+250 V</span>
+                        </div>
+                        <span class="invoice-date">10 Jan 2026, 09:15</span>
+                        <div class="status-badge status-rejected">Recusada</div>
+                    </div>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+                <!-- Approved Older Invoice -->
+                <a href="#" class="invoice-card">
+                    <img src="https://images.unsplash.com/photo-1554224154-22dec7ec8818?q=80&w=200&auto=format&fit=crop"
+                        class="invoice-thumb" alt="Miniatura da nota">
+                    <div class="invoice-info">
+                        <div class="invoice-header">
+                            <span class="invoice-tag">Nota #11002</span>
+                            <span class="vetcoins-gain">+1.250 V</span>
+                        </div>
+                        <span class="invoice-date">05 Dez 2025, 14:20</span>
+                        <div class="status-badge status-approved">Aprovada</div>
+                    </div>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>

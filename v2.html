@@ -249,6 +249,12 @@
             color: white;
         }
 
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .product-info {
             padding: 12px;
             flex: 1;
@@ -594,6 +600,39 @@
             sidebar.classList.toggle('open');
             overlay.classList.toggle('open');
         }
+
+        async function loadGifts() {
+            const grid = document.querySelector('.products-grid');
+            try {
+                // Usando https para evitar problemas de mixed-content, já que a API suporta
+                const response = await fetch('https://api.clubevetnil.com.br/api/gifts');
+                if (!response.ok) throw new Error('Network response was not ok');
+                const gifts = await response.json();
+
+                grid.innerHTML = ''; // Limpar placeholders
+
+                gifts.forEach(gift => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.innerHTML = `
+                        <div class="product-img">
+                            <img src="${gift.picture}" alt="${gift.name}">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">${gift.name}</h3>
+                            <div class="product-cost">${gift.points} Vetcoins</div>
+                            <button class="exchange-btn">Trocar</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Erro ao buscar os prêmios:', error);
+                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; padding: 20px;">Erro ao carregar os prêmios. Tente novamente mais tarde.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadGifts);
     </script>
 </body>
 
