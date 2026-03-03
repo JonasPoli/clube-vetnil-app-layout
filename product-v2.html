@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto - Clube Vetnil</title>
+    <!-- Use Google Fonts (Inter) for a clean look like Nubank -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Cores padrão do aplicativo (v1.html) */
+            --bg-1: #0d3b33;
+            --bg-2: #0b2f28;
+            --bg-3: #09251f;
+
+            --vetnil-green: #14443b;
+            /* Ajustado para harmonizar com v1.html */
+            --vetnil-dark-green: #0d3b33;
+
+            /* Ajustes para o novo tema mais dark */
+            --bg-color: #051311;
+            --card-bg: rgba(255, 255, 255, .07);
+            /* Igual a .card do v1 */
+            --text-primary: #eaf4f1;
+            --text-secondary: rgba(234, 244, 241, .72);
+            --border-color: rgba(255, 255, 255, .10);
+
+            --shadow: 0 18px 40px rgba(0, 0, 0, .25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            /* Mobile first, Nubank style app layout */
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        /* Header / App Bar */
+        .app-header {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .back-btn,
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover,
+        .icon-btn:hover {
+            background: var(--bg-color);
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 300px;
+            background-color: #F9F9F9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+        }
+
+        .product-content {
+            padding: 32px 24px;
+        }
+
+        .product-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .product-points-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Fundo sutil claro pro tema dark */
+            color: #00A651;
+            /* Verde Vetnil original brilhante para dar leitura */
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .points-icon {
+            margin-right: 6px;
+            fill: #00A651;
+            /* Deixando a estrela preenchida com verde brilhante */
+            stroke: #00A651;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .product-description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            white-space: pre-line;
+            /* to handle \r\n from API */
+        }
+
+        .action-container {
+            padding: 0 24px 32px 24px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: var(--vetnil-green);
+            color: white;
+            border: none;
+            border-radius: 100px;
+            padding: 18px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--vetnil-dark-green);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .loading,
+        .error-message {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: var(--text-secondary);
+        }
+
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .skeleton-img {
+            width: 100%;
+            height: 300px;
+            border-radius: 0;
+        }
+
+        .skeleton-title {
+            width: 80%;
+            height: 28px;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-badge {
+            width: 100px;
+            height: 32px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+
+        .skeleton-text {
+            width: 100%;
+            height: 16px;
+            margin-bottom: 8px;
+        }
+
+        .skeleton-text.short {
+            width: 60%;
+        }
+
+        .skeleton-btn {
+            width: 100%;
+            height: 56px;
+            border-radius: 100px;
+            margin-top: 32px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app" class="container">
+        <!-- Skeleton UI (Shown by default) -->
+        <div id="skeleton-view">
+            <div class="app-header">
+                <div class="skeleton" style="width: 24px; height: 24px; border-radius: 50%;"></div>
+                <div class="skeleton" style="width: 24px; height: 24px; border-radius: 50%;"></div>
+            </div>
+            <div class="skeleton skeleton-img"></div>
+            <div class="product-content">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-badge"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text short"></div>
+
+                <div class="skeleton skeleton-btn"></div>
+            </div>
+        </div>
+
+        <!-- Real Content (Hidden by default) -->
+        <div id="content-view" style="display: none;">
+            <div class="app-header">
+                <button class="back-btn" aria-label="Voltar" onclick="window.history.back()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <button class="icon-btn" aria-label="Notificações">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="product-image-container">
+                <img id="product-img" class="product-image" src="" alt="Produto">
+            </div>
+
+            <div class="product-content">
+                <h1 id="product-name" class="product-name">Nome do Produto</h1>
+
+                <div class="product-points-badge">
+                    <svg class="points-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                        </polygon>
+                    </svg>
+                    <span id="product-points">0</span> &nbsp;pts
+                </div>
+
+                <h2 class="section-title">Sobre o produto</h2>
+                <div id="product-description" class="product-description">
+                    Descrição do produto...
+                </div>
+            </div>
+
+            <div class="action-container">
+                <button class="btn-primary">Resgatar prêmio</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // To avoid cors or fetch issues from raw HTML files open in browser, you can just use fetch normally but API should allow it
+                const response = await fetch('https://api.clubevetnil.com.br/api/gifts');
+                if (!response.ok) throw new Error('Erro ao carregar os dados');
+
+                const gifts = await response.json();
+
+                if (gifts && gifts.length > 0) {
+                    // Pick a random gift
+                    const randomIndex = Math.floor(Math.random() * gifts.length); // Use API gifts length
+                    const gift = gifts[randomIndex];
+
+                    // Populate UI
+                    document.getElementById('product-img').src = gift.picture;
+                    document.getElementById('product-img').alt = gift.name;
+                    document.getElementById('product-name').textContent = gift.name;
+                    document.getElementById('product-points').textContent = gift.points.toLocaleString('pt-BR');
+
+                    document.getElementById('product-description').textContent = gift.description || 'Sem descrição disponível.';
+
+                    // Switch views
+                    document.getElementById('skeleton-view').style.display = 'none';
+                    document.getElementById('content-view').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error fetching gifts:', error);
+                document.getElementById('app').innerHTML = `
+                    <div class="error-message" style="padding: 24px; text-align: center; height: 400px;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--vetnil-green)" stroke-width="2" style="margin-bottom: 16px;">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <h2 style="margin-bottom: 8px;">Ops! Algo deu errado.</h2>
+                        <p style="color: var(--text-secondary); margin-bottom: 16px;">Não foi possível carregar o produto no momento.</p>
+                        <code style="display: block; background: #ffebee; color: #c62828; padding: 8px; border-radius: 4px; font-size: 12px; margin-bottom: 24px;">Erro: ${error.message}</code>
+                        <button onclick="location.reload()" class="btn-primary">Tentar Novamente</button>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+
+</html>
